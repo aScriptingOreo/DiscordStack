@@ -1,0 +1,5 @@
+services:
+  musicbot:
+    build: .
+    volumes:
+      - ".:/musicbot"
