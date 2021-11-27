@@ -1,5 +1,14 @@
+version: "3.2"
 services:
-  musicbot:
-    build: .
+  redbot:
+    container_name: redbot
+    image: phasecorex/red-discordbot
+    restart: unless-stopped
     volumes:
-      - ".:/musicbot"
+      - ./bots/redbot:/data
+    environment:
+      - TZ=${TIMEZONE}
+      - PUID=1000
+      - OWNER=${RED_OWNER_ID}
+      - TOKEN=&{RED_TOKEN}
+      - PREFIX=&{RED_PREFIX}
