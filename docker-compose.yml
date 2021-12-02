@@ -1,14 +1,37 @@
 version: "3.2"
 services:
-  redbot:
-    container_name: redbot
-    image: phasecorex/red-discordbot
-    restart: unless-stopped
+  #  redbot:
+  #    container_name: redbot
+  #    image: phasecorex/red-discordbot
+  #    restart: unless-stopped
+  #    volumes:
+  #      - ./bots/redbot:/data
+  #    environment:
+  #      - TZ=${TIMEZONE}
+  #      - PUID=1000
+  #      - OWNER=${RED_OWNER_ID}
+  #      - TOKEN=ODQ2MTgzMTM4OTk2NjQ5OTk0.YKrzdQ.vG_jyQcVWEbW_aqL_109V86SHR8
+  #      - PREFIX=&{RED_PREFIX}
+
+  bot:
+    image: openjdk:14
+    command: bash -c "cd /root/; while true; do java -jar corrupted-mainframe.jar; done"
+    depends_on:
+      - db
     volumes:
-      - ./bots/redbot:/data
+      - ./bots/mainframe/config.json/:/root/config.json
+      - ./bots/mainframe/plugins:/root/plugins/
+      - ./bots/mainframe/corrupted-mainframe.jar/:/root/corrupted-mainframe.jar
+
+  db:
+    image: postgres
+    restart: always
     environment:
-      - TZ=${TIMEZONE}
-      - PUID=1000
-      - OWNER=${RED_OWNER_ID}
-      - TOKEN=&{RED_TOKEN}
-      - PREFIX=&{RED_PREFIX}
+      POSTGRES_PASSWORD: "${DB_PASSWORD}" # Provide the DB_PASSWORD env. var. when running the container, should be the same as in the config
+      # TODO: get password from config?
+      POSTGRES_USER: "postgres"
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Mount postgres persistent volume to postgres's data directory
+
+volumes:
+  pgdata: # Postgres volume
