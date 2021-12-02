@@ -1,5 +1,5 @@
 {
-  "token": "ODQ2MTgzMTM4OTk2NjQ5OTk0.YKrzdQ.vG_jyQcVWEbW_aqL_109V86SHR8",
+  "token": "",
   "permaAdmins": ["188516978930089984", "optional other user id here"],
   "databaseUrl": "jdbc:postgresql://db:5432/postgres?user=postgres&password=554565",
   "databaseDriver": "org.postgresql.Driver",
